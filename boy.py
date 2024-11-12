@@ -7,6 +7,7 @@ from ball import Ball
 import game_world
 import game_framework
 from state_machine import start_event, right_down, left_up, left_down, right_up, space_down, StateMachine, time_out
+import play_mode
 
 # Boy Run Speed
 PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -150,6 +151,9 @@ class Boy:
         if self.ball_count > 0:
             self.ball_count -= 1
             ball = Ball(self.x, self.y, self.face_dir*10)
+
+            game_world.add_collision_pair('zombie:ball', None, ball)
+
             game_world.add_object(ball)
 
     def get_bb(self):
@@ -161,4 +165,7 @@ class Boy:
         # fill here
         if group == 'boy:ball':
             self.ball_count += 1
+        if group == 'boy:zombie':
+            print('collide z')
+            pass
         pass
